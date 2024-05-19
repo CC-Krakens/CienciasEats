@@ -32,11 +32,11 @@ function Login() {
     <div className="login-container">
         <form onSubmit={handleLogin}>
             <label>
-                Username:
+                Usuario:
                 <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
             </label>
             <label>
-                Password:
+                Contraseña:
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </label>
             <button type="submit">Login</button>

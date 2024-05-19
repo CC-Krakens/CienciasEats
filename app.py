@@ -41,6 +41,21 @@ def logout():
     session['user_id'] = None
     return jsonify({'status': 'success'})
 
+@app.route('/registro', methods=['POST'])
+def registro():
+    name = request.json.get('username')
+    tel = request.json.get('telefono')
+    correo = request.json.get('correo')
+    passwd = request.json.get('password')
+    esVendedor = request.json.get('vendedor')
+        
+    if existe_usuario(name):
+        return jsonify({'status': 'error', 'message': 'El nombre de usuario ya existe'})
+    usuario = Usuario(nombre=name, correo=correo, telefono=tel, contraseña=passwd, esVendedor=esVendedor)
+    db.session.add(usuario)
+    db.session.commit()
+    return jsonify({'status': 'success'})
+
 
 if __name__ == '__main__':
     with app.app_context():

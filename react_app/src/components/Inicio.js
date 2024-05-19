@@ -14,7 +14,7 @@ function Inicio() {
       <h1>Ciencias eats</h1>
       <p>Bienvenido.</p>
       <button onClick={() => navigate('/login')}>Log In</button>
-      <button onClick={() => navigate('/home')}>Registrarse</button>
+      <button onClick={() => navigate('/registro')}>Registrarse</button>
     </div>
   );
 }
