@@ -1,7 +1,7 @@
 // src/components/Home.js
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './Home.css';
+import './styles.css';
 
 import axios from 'axios';
 

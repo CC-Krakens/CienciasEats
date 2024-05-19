@@ -1,7 +1,7 @@
 // src/components/Registro.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Registro.css';
+import './styles.css';
 
 import axios from 'axios';
 
