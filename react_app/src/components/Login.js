@@ -18,7 +18,11 @@ function Login() {
         password,
       });
       if (response.data.status === 'success') {
-        navigate('/home', {state: {username: response.data.user_id}});
+        if(!response.data.vendedor){
+          navigate('/home_comprador', {state: {username: response.data.username}});
+        }else{
+          navigate('/home', {state: {username: response.data.username}});
+        }
       } else {
         alert(response.data.message);
       }

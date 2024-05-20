@@ -25,16 +25,23 @@ def checa_contraseña(user, passwd):
         return False
     return usuario.contraseña == passwd
 
+def get_user_id(user):
+    usuario = Usuario.query.filter_by(nombre=user).first()
+    return usuario.idUsuario
+
 @app.route('/login', methods=['POST'])
 def login():
     name = request.json.get('username')
     passwd = request.json.get('password')
-    session['user_id'] = name
+    session['user_id'] = get_user_id(name)
+    session['username'] = name
+    session['vendedor'] = Usuario.query.filter_by(nombre=name).first().esVendedor
     if not existe_usuario(name):
         return jsonify({'status': 'error', 'message': 'No existe el usuario'})
     if not checa_contraseña(name, passwd):
         return jsonify({'status': 'error', 'message': 'Contraseña incorrecta'})
-    return jsonify({'status': 'success', 'user_id': session['user_id']})
+    return jsonify({'status': 'success', 'user_id': session['user_id'], 'username': session['username'],
+                    'vendedor': session['vendedor']})
 
 @app.route('/logout', methods=['POST'])
 def logout():
