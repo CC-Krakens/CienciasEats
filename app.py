@@ -19,7 +19,7 @@ CORS(app)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'cienciaseats@gmail.com'
-app.config['MAIL_PASSWORD'] = 'cienciaseats123'
+app.config['MAIL_PASSWORD'] = 'qjqn maes xlhs ljcm'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
@@ -97,6 +97,13 @@ def comprar():
     mail.send(msg)
 
     return jsonify({'status': 'success'})
+
+# @app.route('/prueba', methods=['GET'])
+# def prueba():
+#     mail = Mail(app)
+#     msg = Message("Compra realizada", sender="cienciaseats@gmail.com", recipients=["mariorosales@ciencias.unam.mx"])
+#     msg.body = f"El usuario comprador ha comprado tu producto producto. Contactalo en correo_comprador@cienciaseats.com para coordinar la entrega."
+#     mail.send(msg)
 
 if __name__ == '__main__':
     with app.app_context():
