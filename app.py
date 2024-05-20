@@ -63,6 +63,11 @@ def registro():
     db.session.commit()
     return jsonify({'status': 'success'})
 
+@app.route('/productos', methods=['GET'])
+def productos():
+    productos = Producto.query.all()
+    return jsonify([producto.serialize() for producto in productos])
+
 
 if __name__ == '__main__':
     with app.app_context():
