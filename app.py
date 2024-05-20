@@ -77,7 +77,7 @@ def productos():
     return jsonify([producto.serialize() for producto in productos])
 
 @app.route('/comprar', methods=['POST'])
-def(comprar()):
+def comprar():
     producto_id = request.json.get('producto_id')
     comprador_id = session['user_id']
     vendedor_id = Producto.query.get(producto_id).vendedor
@@ -97,28 +97,6 @@ def(comprar()):
     mail.send(msg)
 
     return jsonify({'status': 'success'})
-
-@app.route('/comprar', methods=['POST'])
-def comprar():
-    producto_id = request.json.get('producto_id')
-    vendedor_id = request.json.get('vendedor_id')
-    comprador_id = session['user_id']
-    
-    # Get the email address of the vendedor
-    vendedor = Usuario.query.get(vendedor_id)
-    vendedor_email = vendedor.correo
-    
-    # Get the details of the producto
-    producto = Producto.query.get(producto_id)
-    producto_nombre = producto.nombre
-    
-    # Send email to the vendedor
-    msg = Message('Compra de Producto', sender='your_email@gmail.com', recipients=[vendedor_email])
-    msg.body = f"El usuario {session['username']} ha comprado el producto {producto_nombre}."
-    mail.send(msg)
-    
-    return jsonify({'status': 'success', 'message': 'Correo enviado al vendedor'})
-
 
 if __name__ == '__main__':
     with app.app_context():
