@@ -5,6 +5,7 @@ from alchemyClasses import db
 from flask import jsonify
 from alchemyClasses.Usuario import Usuario
 from alchemyClasses.Producto import Producto
+from flask_mail import Mail, Message
 from alchemyClasses.Reseña import Reseña
 
 app = Flask(__name__)
@@ -14,6 +15,13 @@ app.config.from_mapping(
 )
 db.init_app(app)
 CORS(app)
+#Configuración  de Flask-Mail
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'cienciaseats@gmail.com'
+app.config['MAIL_PASSWORD'] = 'cienciaseats123'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
 
 def existe_usuario(user):
     print
@@ -67,6 +75,49 @@ def registro():
 def productos():
     productos = Producto.query.all()
     return jsonify([producto.serialize() for producto in productos])
+
+@app.route('/comprar', methods=['POST'])
+def(comprar()):
+    producto_id = request.json.get('producto_id')
+    comprador_id = session['user_id']
+    vendedor_id = Producto.query.get(producto_id).vendedor
+    comprador = session['username']
+    
+    correo_vendedor = Usuario.query.get(vendedor_id).correo
+    correo_comprador = Usuario.query.get(comprador_id).correo
+    producto = Producto.query.get(producto_id).nombre
+
+    mail = Mail(app)
+    msg = Message("Compra realizada", sender="cienciaseats@gmail.com", recipients=[correo_vendedor])
+    msg.body = f"El usuario {comprador} ha comprado tu producto {producto}. Contactalo en {correo_comprador} para coordinar la entrega."
+    mail.send(msg)
+
+    msg = Message("Confirmación de compra", sender="cienciaseats@gmail.com", recipients=[correo_comprador])
+    msg.body = f"Has comprado el producto {producto}. El vendedor se pondrá en contacto con usted desde {correo_vendedor}."
+    mail.send(msg)
+
+    return jsonify({'status': 'success'})
+
+@app.route('/comprar', methods=['POST'])
+def comprar():
+    producto_id = request.json.get('producto_id')
+    vendedor_id = request.json.get('vendedor_id')
+    comprador_id = session['user_id']
+    
+    # Get the email address of the vendedor
+    vendedor = Usuario.query.get(vendedor_id)
+    vendedor_email = vendedor.correo
+    
+    # Get the details of the producto
+    producto = Producto.query.get(producto_id)
+    producto_nombre = producto.nombre
+    
+    # Send email to the vendedor
+    msg = Message('Compra de Producto', sender='your_email@gmail.com', recipients=[vendedor_email])
+    msg.body = f"El usuario {session['username']} ha comprado el producto {producto_nombre}."
+    mail.send(msg)
+    
+    return jsonify({'status': 'success', 'message': 'Correo enviado al vendedor'})
 
 
 if __name__ == '__main__':

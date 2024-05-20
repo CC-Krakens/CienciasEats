@@ -19,7 +19,7 @@ function Login() {
       });
       if (response.data.status === 'success') {
         if(!response.data.vendedor){
-          navigate('/home_comprador', {state: {username: response.data.username}});
+          navigate('/home_comprador', {state: {username: response.data.username, user_id: response.data.user_id}});
         }else{
           navigate('/home', {state: {username: response.data.username}});
         }

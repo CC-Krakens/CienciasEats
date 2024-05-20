@@ -10,6 +10,7 @@ function Home_Comprador() {
   const [productos, setProductos] = useState([]);
   const location = useLocation();
   const username = location.state.username;
+  const user_id = location.state.user_id;
   
   useEffect(() => {
     const buscarProductos = async () => {
@@ -25,6 +26,18 @@ function Home_Comprador() {
   }, []);
   
 
+  const handleComprar = (producto_id) => {
+    try {
+      axios.post('http://localhost:5000/comprar', {
+        producto_id,
+      });
+      alert('Gracias por su compra. El vendedor se pondrá en contacto con usted.');
+    } catch (error) {
+      console.error('Error al comprar el producto:', error);
+      alert('No se pudo comprar el producto. Intente de nuevo.');
+    }
+  };
+
   return (
     <div className="home-container">
       <h1>Ciencias eats</h1>
@@ -34,6 +47,7 @@ function Home_Comprador() {
         {productos.map((producto) => (
           <li key={producto.idProducto}>
             {producto.nombre} - ${producto.precio}
+            <button onClick={() => handleComprar(producto.idProducto)}>Comprar</button>
           </li>
         ))}
       </ul>
