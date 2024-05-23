@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "./AgregarProducto.css";
+import "./App.css";
 
 import Productos from "./components/Productos/Productos";
 import NuevoProducto from "./components/NuevoProducto/NuevoProducto";

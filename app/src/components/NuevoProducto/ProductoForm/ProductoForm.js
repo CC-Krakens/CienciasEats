@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "./ProductoForm.css";
+import "../../../App.css";
 
 const ProductoForm = (props) => {
   const [nombreIngresado, setNombreIngresado] = useState("");

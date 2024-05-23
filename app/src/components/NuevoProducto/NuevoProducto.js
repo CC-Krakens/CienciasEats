@@ -1,6 +1,6 @@
 import React from "react";
 
-import './NuevoProducto.css';
+import '../../App.css';
 import ProductoForm from "./ProductoForm/ProductoForm";
 
 const NuevoProducto = (props) => {

@@ -12,6 +12,7 @@ import NuevoProducto from "./components/NuevoProducto/NuevoProducto";
 import Peliculas from "./components/Peliculas/Peliculas";
 import NuevoPelicula from "./components/NuevoPelicula/NuevoPelicula";
 
+
 function App() {
   const [peliculas, setPeliculas] = useState([
     { inventario: 1, nombre: "Spiderman", genero: "Sam R.", duracion: 5 },
@@ -21,19 +22,22 @@ function App() {
 
   const [productos, setProductos] = useState([
     {
-      nombre: "General",
-      descripcion: "Fong",
-      password: 313320679,
+      nombre: "Pizza",
+      descripcion: "Pizza grande de pepperoni",
+      precio: 180,
+      cantidad: 9,
     },
     {
-      nombre: "Valeria",
-      descripcion: "Garcia",
-      password: 314006088,
+      nombre: "Pantalón",
+      descripcion: "Pantalón de mezclilla talla grande",
+      precio: 240,
+      cantidad: 1
     },
     {
-      nombre: "Erick",
-      descripcion: "Martinez",
-      password: 414890123,
+      nombre: "Peluche",
+      descripcion: "Peluche de Pikachu",
+      precio: 80,
+      cantidad: 15
     },
   ]);
 

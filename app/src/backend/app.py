@@ -5,8 +5,11 @@ from alchemyClasses import db
 from flask import jsonify
 from alchemyClasses.Producto import Producto
 
+from alchemyClasses.Usuario import Usuario
+
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://dev:123!@localhost:3306/cc_krakens'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Jrosales8.@localhost:3306/cc_krakens'
 app.config.from_mapping(
     SECRET_KEY='dev'
 )
@@ -14,7 +17,10 @@ db.init_app(app)
 CORS(app)
 
 
-
+@app.route('/productos', methods=['GET'])
+def productos():
+    productos = Producto.query.all()
+    return jsonify([producto.serialize() for producto in productos])
 
 
 

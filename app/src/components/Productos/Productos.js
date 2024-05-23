@@ -2,7 +2,7 @@ import React from "react";
 
 import Card from '../UI/Card';
 import Producto from "./Producto/Producto";
-import './Productos.css';
+import '../../App.css';
 
 const Productos = (props) => {  
 

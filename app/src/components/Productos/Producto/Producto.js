@@ -1,7 +1,7 @@
 import React from "react";
 
 import Card from '../../UI/Card';
-import './Producto.css';
+import '../../../App.css';
 
 const Producto = (props) => {
     return (
