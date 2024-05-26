@@ -14,39 +14,35 @@ import axios from 'axios';
 
 function App() {
 
-  const [productos, setProductos] = useState([
-    {
-      nombre: "Pizza",
-      descripcion: "Pizza grande de pepperoni",
-      precio: 180,
-      cantidad: 9,
-    },
-    {
-      nombre: "Pantalón",
-      descripcion: "Pantalón de mezclilla talla grande",
-      precio: 240,
-      cantidad: 1
-    },
-    {
-      nombre: "Peluche",
-      descripcion: "Peluche de Pikachu",
-      precio: 80,
-      cantidad: 15
-    },
-  ]);
+  const [productos, setProductos] = useState([]);
 
 
   useEffect(() => {
     axios.get('http://localhost:5000/productos')
       .then(response => setProductos(response.data))
-      .catch(error => console.error('Error fetching products:', error));
+      .catch(error => console.error('No se encontraron productos:', error));
   }, []);
 
   const agregarProducto = (producto) => {
     const nuevoProducto = [producto, ...productos];
     setProductos(nuevoProducto);
     console.log(nuevoProducto);
+
+  axios.post('http://localhost:5000/agregarProducto', producto)
+  .then(response => {
+    console.log('Producto agregado:', response.data);
+  })
+  .catch(error => {
+    console.error('Error al agregar el producto:', error);
+  });
+
   };
+
+
+
+  
+
+
 
   const eliminarProducto = (index) => {
     const nuevaListaProductos = [...productos];
@@ -73,14 +69,6 @@ function App() {
           </Link>
         </div>
         <div className="App">
-      <h1>Lista de Productos</h1>
-      <ul>
-        {productos.map(producto => (
-          <li key={producto.idProducto}>
-            {producto.nombre} - ${producto.precio}
-          </li>
-        ))}
-      </ul>
     </div>
       </div>
       <Routes>

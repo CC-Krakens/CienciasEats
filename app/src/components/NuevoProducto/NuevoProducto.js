@@ -3,6 +3,7 @@ import React from "react";
 import '../../App.css';
 import ProductoForm from "./ProductoForm/ProductoForm";
 
+
 const NuevoProducto = (props) => {
     
     const guardaProductoHandler = (productoIngresado) => {
@@ -10,6 +11,7 @@ const NuevoProducto = (props) => {
             ...productoIngresado
         };
         props.onAgregarProducto(productos);
+        
     };
 
     return (

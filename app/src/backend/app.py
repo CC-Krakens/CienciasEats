@@ -1,3 +1,4 @@
+from pickle import FALSE
 from flask import Flask, redirect, render_template, url_for, request, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
@@ -20,7 +21,6 @@ CORS(app)
 @app.route('/productos', methods=['GET'])
 def productos():
     productos = Producto.query.all()
-    app.logger.debug(f'PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPProductos obtenidos: {productos}')
     return jsonify([producto.serialize() for producto in productos])
 
 
@@ -30,6 +30,25 @@ def productos():
 def logout():
     session['user_id'] = None
     return jsonify({'status': 'success'})
+
+    
+
+
+@app.route('/agregarProducto', methods=['POST'])
+def agregar_producto():
+    data = request.get_json()
+    nuevo_producto = Producto(
+        nombre=data['nombre'],
+        descripcion=data.get('descripcion', ''),
+        foto=data.get('foto'),
+        categoria=data.get('categoria', ''),
+        precio=data['precio'],
+        inventario=data['cantidad'],
+        vendedor = 88
+    )
+    db.session.add(nuevo_producto)
+    db.session.commit()
+    return jsonify(nuevo_producto.serialize()), 201
 
 
 if __name__ == '__main__':

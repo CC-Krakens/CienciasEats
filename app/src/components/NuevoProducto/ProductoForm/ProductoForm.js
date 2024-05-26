@@ -23,9 +23,6 @@ const ProductoForm = (props) => {
     setPrecioIngresado(event.target.value);
   };
   
-  const cambioPasswordHandler = (event) => {
-    setPasswordIngresado(event.target.value);
-  };
   
   const cambioCantidadHandler = (event) => {
     setCantidadIngresado(event.target.value);
