@@ -20,6 +20,7 @@ CORS(app)
 @app.route('/productos', methods=['GET'])
 def productos():
     productos = Producto.query.all()
+    app.logger.debug(f'PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPProductos obtenidos: {productos}')
     return jsonify([producto.serialize() for producto in productos])
 
 
@@ -34,4 +35,4 @@ def logout():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run()
+    app.run(debug = True)

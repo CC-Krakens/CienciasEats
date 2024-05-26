@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./App.css";
 
@@ -9,16 +9,10 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Productos from "./components/Productos/Productos";
 import NuevoProducto from "./components/NuevoProducto/NuevoProducto";
 
-import Peliculas from "./components/Peliculas/Peliculas";
-import NuevoPelicula from "./components/NuevoPelicula/NuevoPelicula";
+import axios from 'axios';
 
 
 function App() {
-  const [peliculas, setPeliculas] = useState([
-    { inventario: 1, nombre: "Spiderman", genero: "Sam R.", duracion: 5 },
-    { inventario: 2, nombre: "Batman", genero: "Tim Burton", duracion: 3 },
-    { inventario: 3, nombre: "Inception", genero: "Christopher Nolan", duracion: 4 },
-  ]);
 
   const [productos, setProductos] = useState([
     {
@@ -41,6 +35,13 @@ function App() {
     },
   ]);
 
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/productos')
+      .then(response => setProductos(response.data))
+      .catch(error => console.error('Error fetching products:', error));
+  }, []);
+
   const agregarProducto = (producto) => {
     const nuevoProducto = [producto, ...productos];
     setProductos(nuevoProducto);
@@ -54,17 +55,6 @@ function App() {
   };
   
 
-  const agregarPelicula = (pelicula) => {
-    const nuevoPelicula = [pelicula, ...peliculas];
-    setPeliculas(nuevoPelicula);
-    console.log(nuevoPelicula);
-  };
-
-  const eliminarPelicula = (index) => {
-    const nuevaListaPeliculas = [...peliculas];
-    nuevaListaPeliculas.splice(index, 1);
-    setPeliculas(nuevaListaPeliculas);
-  };
 
 
 
@@ -82,6 +72,16 @@ function App() {
             <button type="button">Agregar producto</button>
           </Link>
         </div>
+        <div className="App">
+      <h1>Lista de Productos</h1>
+      <ul>
+        {productos.map(producto => (
+          <li key={producto.idProducto}>
+            {producto.nombre} - ${producto.precio}
+          </li>
+        ))}
+      </ul>
+    </div>
       </div>
       <Routes>
         <Route path="/nuevo-producto" element={<NuevoProducto onAgregarProducto={agregarProducto} />} />

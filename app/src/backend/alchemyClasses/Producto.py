@@ -13,8 +13,6 @@ class Producto(db.Model):
     inventario = db.Column(db.Integer, nullable=False)
     vendedor = db.Column(db.Integer, db.ForeignKey('usuario.idUsuario'), nullable=False)
 
-    reseñas = db.relationship('Reseña', backref='producto_ref', lazy=True)
-
     def __repr__(self):
         return f'<Producto {self.descripcion}>'
 
