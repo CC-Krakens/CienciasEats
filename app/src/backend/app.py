@@ -51,6 +51,20 @@ def agregar_producto():
     return jsonify(nuevo_producto.serialize()), 201
 
 
+@app.route('/eliminarProducto/<int:id>', methods=['DELETE'])
+def eliminar_producto(id):
+    print(id)
+    print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
+    producto = Producto.query.get(id)
+    if producto is None:
+        return jsonify({'error': 'Producto no encontrado'}), 404
+
+    db.session.delete(producto)
+    db.session.commit()
+    return jsonify({'message': 'Producto eliminado'}), 200
+
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

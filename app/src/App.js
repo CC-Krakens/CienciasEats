@@ -24,9 +24,6 @@ function App() {
   }, []);
 
   const agregarProducto = (producto) => {
-    const nuevoProducto = [producto, ...productos];
-    setProductos(nuevoProducto);
-    console.log(nuevoProducto);
 
   axios.post('http://localhost:5000/agregarProducto', producto)
   .then(response => {
@@ -39,17 +36,22 @@ function App() {
   };
 
 
-
   
-
-
-
-  const eliminarProducto = (index) => {
+  const eliminarProducto = (id) => {
     const nuevaListaProductos = [...productos];
-    nuevaListaProductos.splice(index, 1);
+    nuevaListaProductos.splice(id, 1);
     setProductos(nuevaListaProductos);
+
+    axios.delete(`http://localhost:5000/eliminarProducto/${id}`)
+      .then(response => {
+        setProductos(productos.filter(producto => producto.idProducto !== id));
+        console.log('Producto eliminado:', response.data);
+      })
+      .catch(error => {
+        console.error('Error al eliminar el producto:', error);
+      });
   };
-  
+
 
 
 
@@ -60,7 +62,15 @@ function App() {
     
     <Router>
       <div>
-      <Productos productos={productos} onEliminarProducto={eliminarProducto} />
+      {productos.map(producto => (
+          <li key={producto.idProducto}>
+            <div>{producto.nombre}</div> 
+            <div>{producto.descripcion}</div>  
+            <div>{producto.precio}</div> 
+            <div>{producto.cantidad}</div> 
+            <button onClick={() => eliminarProducto(producto.idProducto)}>Eliminar</button>
+          </li>
+        ))}
       </div>
       <div>
         <div className="nuevo-alumno__actions">
