@@ -8,6 +8,8 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
 import Productos from "./components/Productos/Productos";
 import NuevoProducto from "./components/NuevoProducto/NuevoProducto";
+import ActualizarProducto from "./components/NuevoProducto/ActualizarProducto";
+
 
 import axios from 'axios';
 
@@ -53,6 +55,18 @@ function App() {
   };
 
 
+  const actualizarProducto = (id, datosActualizados) => {
+    axios.put(`http://localhost:5000/actualizarProducto/${id}`, datosActualizados)
+      .then(response => {
+        setProductos(productos.map(producto =>
+          producto.idProducto === id ? response.data : producto
+        ));
+        console.log('Producto actualizado:', response.data);
+      })
+      .catch(error => {
+        console.error('Error al actualizar el producto:', error);
+      });
+  };
 
 
 
@@ -69,11 +83,17 @@ function App() {
             <div>{producto.precio}</div> 
             <div>{producto.cantidad}</div> 
             <button onClick={() => eliminarProducto(producto.idProducto)}>Eliminar</button>
+
+            <div className="actualizar-producto__actions">
+            <Link to={`/actualizar-producto/${producto.idProducto}`}>
+                <button type="button">Actualizar producto</button>
+              </Link>
+        </div>
           </li>
         ))}
       </div>
       <div>
-        <div className="nuevo-alumno__actions">
+        <div className="nuevo-producto__actions">
           <Link to="/nuevo-producto">
             <button type="button">Agregar producto</button>
           </Link>
@@ -83,6 +103,7 @@ function App() {
       </div>
       <Routes>
         <Route path="/nuevo-producto" element={<NuevoProducto onAgregarProducto={agregarProducto} />} />
+        <Route path="/actualizar-producto/:id" element={<ActualizarProducto onActualizarProducto={actualizarProducto} />} />
       </Routes>
     </Router>
   );

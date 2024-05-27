@@ -9,7 +9,18 @@ const Productos = (props) => {
     const eliminarProductoHandler = (index) => {
         props.onEliminarProducto(index);
     };
+
+    const actualizarProductoHandler = (index) => {
+        props.onActualizarProducto(index);
+    };
  
+
+
+    
+    
+     
+
+      
 
     return (
         <div>
@@ -24,6 +35,7 @@ const Productos = (props) => {
                         cantidad={producto.cantidad}
                         superUser={producto.superUser}
                         onEliminar={() => eliminarProductoHandler(index)}
+                        onActualizar={() => actualizarProductoHandler(index)}
 
                     />
                 ))}

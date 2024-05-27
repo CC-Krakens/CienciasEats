@@ -53,8 +53,6 @@ def agregar_producto():
 
 @app.route('/eliminarProducto/<int:id>', methods=['DELETE'])
 def eliminar_producto(id):
-    print(id)
-    print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
     producto = Producto.query.get(id)
     if producto is None:
         return jsonify({'error': 'Producto no encontrado'}), 404
@@ -62,6 +60,26 @@ def eliminar_producto(id):
     db.session.delete(producto)
     db.session.commit()
     return jsonify({'message': 'Producto eliminado'}), 200
+
+@app.route('/actualizarProducto/<int:id>', methods=['PUT'])
+def actualizar_producto(id):
+    print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
+    data = request.get_json()
+    producto = Producto.query.get(id)
+    if producto is None:
+        return jsonify({'error': 'Producto no encontrado'}), 404
+
+    producto.nombre = data.get('nombre', producto.nombre)
+    producto.descripcion = data.get('descripcion', producto.descripcion)
+    producto.foto = data.get('foto', producto.foto)
+    producto.categoria = data.get('categoria', producto.categoria)
+    producto.precio = data.get('precio', producto.precio)
+    producto.inventario = data.get('inventario', producto.inventario)
+    producto.vendedor = data.get('vendedor', producto.vendedor)
+
+    db.session.commit()
+    return jsonify(producto.serialize()), 200
+
 
 
 
