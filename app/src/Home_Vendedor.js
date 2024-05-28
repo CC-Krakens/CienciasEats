@@ -6,7 +6,6 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom"; 
 
 
-import Productos from "./components/Productos/Productos";
 import NuevoProducto from "./components/NuevoProducto/NuevoProducto";
 import ActualizarProducto from "./components/NuevoProducto/ActualizarProducto";
 

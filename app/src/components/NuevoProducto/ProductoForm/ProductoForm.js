@@ -28,9 +28,6 @@ const ProductoForm = (props) => {
     setCantidadIngresado(event.target.value);
   };
   
-  const cambioSuperUserHandler = (event) => {
-    setSuperUserIngresado(event.target.checked);
-  };
   
 
   const submitHandler = (event) => {

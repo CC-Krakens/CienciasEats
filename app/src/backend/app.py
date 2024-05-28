@@ -63,7 +63,6 @@ def eliminar_producto(id):
 
 @app.route('/actualizarProducto/<int:id>', methods=['PUT'])
 def actualizar_producto(id):
-    print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
     data = request.get_json()
     producto = Producto.query.get(id)
     if producto is None:
