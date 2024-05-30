@@ -1,20 +1,36 @@
 from flask import Flask, redirect, render_template, url_for, request, flash, session
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
+from flask_session import Session
 from alchemyClasses import db
 from flask import jsonify
 from alchemyClasses.Usuario import Usuario
 from alchemyClasses.Producto import Producto
 from flask_mail import Mail, Message
 from alchemyClasses.Reseña import Reseña
+import os
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_session import Session
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://dev:123!@localhost:3306/cc_krakens'
-app.config.from_mapping(
-    SECRET_KEY='dev'
-)
+app.config['SESSION_TYPE'] = 'sqlalchemy'
+app.config['SESSION_COOKIE_NAME'] = 'session'
+app.config['SESSION_COOKIE_PATH'] = '/'
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SECURE'] = False
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_USE_SIGNER'] = True
+app.config['SESSION_SQLALCHEMY'] = db
+app.config['SESSION_SQLALCHEMY_TABLE'] = 'sessions'
+app.config['SECRET_KEY'] = 'dev'
+
+CORS(app, supports_credentials=True)
 db.init_app(app)
-CORS(app)
+Session(app)
+
 #Configuración  de Flask-Mail
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -41,17 +57,20 @@ def get_user_id(user):
 def login():
     name = request.json.get('username')
     passwd = request.json.get('password')
-    session['user_id'] = get_user_id(name)
-    session['username'] = name
-    session['vendedor'] = Usuario.query.filter_by(nombre=name).first().esVendedor
     if not existe_usuario(name):
         return jsonify({'status': 'error', 'message': 'No existe el usuario'})
     if not checa_contraseña(name, passwd):
         return jsonify({'status': 'error', 'message': 'Contraseña incorrecta'})
+    session['user_id'] = get_user_id(name)
+    session['username'] = name
+    session['vendedor'] = Usuario.query.filter_by(nombre=name).first().esVendedor
+    print(session, flush=True)
+    print(session.sid, flush=True)
     return jsonify({'status': 'success', 'user_id': session['user_id'], 'username': session['username'],
                     'vendedor': session['vendedor']})
 
 @app.route('/logout', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def logout():
     session['user_id'] = None
     return jsonify({'status': 'success'})
@@ -77,7 +96,10 @@ def productos():
     return jsonify([producto.serialize() for producto in productos])
 
 @app.route('/comprar', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def comprar():
+    print(session, flush=True)
+    print(session.sid, flush=True)
     producto_id = request.json.get('producto_id')
     comprador_id = session['user_id']
     vendedor_id = Producto.query.get(producto_id).vendedor
@@ -89,11 +111,11 @@ def comprar():
 
     mail = Mail(app)
     msg = Message("Compra realizada", sender="cienciaseats@gmail.com", recipients=[correo_vendedor])
-    msg.body = f"El usuario {comprador} ha comprado tu producto {producto}. Contactalo en {correo_comprador} para coordinar la entrega."
+    msg.body = f"El usuario {comprador} ha comprado tu producto '{producto}'. Contáctelo en el correo {correo_comprador} para coordinar la entrega."
     mail.send(msg)
 
     msg = Message("Confirmación de compra", sender="cienciaseats@gmail.com", recipients=[correo_comprador])
-    msg.body = f"Has comprado el producto {producto}. El vendedor se pondrá en contacto con usted desde {correo_vendedor}."
+    msg.body = f"Has comprado el producto '{producto}'. El vendedor se pondrá en contacto con usted desde {correo_vendedor}."
     mail.send(msg)
 
     return jsonify({'status': 'success'})
@@ -101,7 +123,7 @@ def comprar():
 # @app.route('/prueba', methods=['GET'])
 # def prueba():
 #     mail = Mail(app)
-#     msg = Message("Compra realizada", sender="cienciaseats@gmail.com", recipients=["mariorosales@ciencias.unam.mx"])
+#     msg = Message("Compra realizada", sender="cienciaseats@gmail.com", recipients=["vendedor88888888@gmail.com"])
 #     msg.body = f"El usuario comprador ha comprado tu producto producto. Contactalo en correo_comprador@cienciaseats.com para coordinar la entrega."
 #     mail.send(msg)
 

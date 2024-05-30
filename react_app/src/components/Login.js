@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles.css';
-
 import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 function Login() {
   const navigate = useNavigate();
@@ -19,9 +20,9 @@ function Login() {
       });
       if (response.data.status === 'success') {
         if(!response.data.vendedor){
-          navigate('/home_comprador', {state: {username: response.data.username, user_id: response.data.user_id}});
+          navigate('/home_comprador', {state: {username: response.data.username}}, {withCredentials: true});
         }else{
-          navigate('/home', {state: {username: response.data.username}});
+          navigate('/home', {state: {username: response.data.username}}, {withCredentials: true});
         }
       } else {
         alert(response.data.message);

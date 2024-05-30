@@ -2,20 +2,20 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './styles.css';
-
 import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 function Home_Comprador() {
   const navigate = useNavigate();
   const [productos, setProductos] = useState([]);
   const location = useLocation();
   const username = location.state.username;
-  const user_id = location.state.user_id;
   
   useEffect(() => {
     const buscarProductos = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/productos');
+        const response = await axios.get('http://localhost:5000/productos', {withCredentials: true});
         setProductos(response.data);
       } catch (error) {
         console.error('Error al obtener los productos:', error);
@@ -26,10 +26,12 @@ function Home_Comprador() {
   }, []);
   
 
-  const handleComprar = (producto_id) => {
+  const handleComprar = async (producto_id) => {
     try {
-      axios.post('http://localhost:5000/comprar', {
+      await axios.post('http://localhost:5000/comprar', {
         producto_id,
+      }, {
+        withCredentials: true,
       });
       alert('Gracias por su compra. El vendedor se pondrá en contacto con usted.');
     } catch (error) {
