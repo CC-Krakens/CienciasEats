@@ -7,7 +7,7 @@ class Producto(db.Model):
     idProducto = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False)
     descripcion = db.Column(db.String(999))
-    foto = db.Column(db.LargeBinary)  # 'longblob' type
+    foto = db.Column(db.String(999)) 
     categoria = db.Column(db.String(20))
     precio = db.Column(db.Integer, nullable=False)
     inventario = db.Column(db.Integer, nullable=False)
@@ -21,6 +21,7 @@ class Producto(db.Model):
             'idProducto': self.idProducto,
             'nombre': self.nombre,
             'descripcion': self.descripcion,
+            'foto': self.foto,
             'categoria': self.categoria,
             'precio': self.precio,
             'inventario': self.inventario,

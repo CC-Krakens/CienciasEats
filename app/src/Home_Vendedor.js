@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 
 
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom"; 
+import { BrowserRouter as Router, Route, Routes, Link, resolvePath } from "react-router-dom"; 
 
 
 import NuevoProducto from "./components/NuevoProducto/NuevoProducto";
@@ -11,6 +11,7 @@ import ActualizarProducto from "./components/NuevoProducto/ActualizarProducto";
 
 
 import axios from 'axios';
+
 
 function Home_Vendedor() {
 
@@ -48,6 +49,7 @@ function Home_Vendedor() {
     nuevaListaProductos.splice(id, 1);
     setProductos(nuevaListaProductos);
 
+
     axios.delete(`http://localhost:5000/eliminarProducto/${id}`)
       .then(response => {
         setProductos(productos.filter(producto => producto.idProducto !== id));
@@ -73,12 +75,13 @@ function Home_Vendedor() {
   };
 
 
-
+  
   
 
   return (
     
     <Router>
+
       <div>
       {productos.map(producto => (
           <li key={producto.idProducto}>
@@ -86,8 +89,16 @@ function Home_Vendedor() {
             <div>{producto.descripcion}</div>  
             <div>{producto.precio}</div> 
             <div>{producto.inventario}</div> 
+            
+            <div>
+            <img
+      src={producto.foto}
+      className="img-thumbnail"
+      />
+      </div>
+                        
             <button onClick={() => eliminarProducto(producto.idProducto)}>Eliminar</button>
-
+            
             <div className="actualizar-producto__actions">
             <Link to={`/actualizar-producto/${producto.idProducto}`}>
                 <button type="button">Actualizar producto</button>

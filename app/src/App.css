@@ -28,6 +28,22 @@
   color: #61dafb;
 }
 
+
+
+.img-responsive {
+  max-width: 100%; /* La imagen no será más ancha que su contenedor */
+  height: auto; /* La altura se ajustará automáticamente para mantener la proporción */
+}
+
+.img-thumbnail {
+  max-width: 200px; /* Ajusta este valor según el tamaño deseado */
+  max-height: 200px; /* Ajusta este valor según el tamaño deseado */
+  width: auto;
+  height: auto;
+  border-radius: 10px; /* Esto es opcional para darle un borde redondeado */
+}
+
+
 .login-container {
   display: flex;
   justify-content: center;
@@ -112,6 +128,9 @@ button {
 button:hover {
   background-color: #d64523;
 }
+
+
+
 
 @keyframes App-logo-spin {
   from {

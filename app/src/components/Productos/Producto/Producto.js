@@ -11,6 +11,7 @@ const Producto = (props) => {
             <p>Descripcion: {props.descripcion}</p>
             <p>Precio: {props.precio}</p>
             <p>Inventario: {props.inventario}</p>
+            <p>Foto: {props.foto}</p>
                 <button onClick={props.onEliminar}>Eliminar</button>
             </div>
             

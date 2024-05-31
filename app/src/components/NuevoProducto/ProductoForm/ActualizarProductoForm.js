@@ -6,10 +6,8 @@ const ActualizarProductoForm = (props) => {
   const [nombreIngresado, setNombreIngresado] = useState("");
   const [descripcionIngresada, setDescripcionIngresado] = useState("");
   const [precioIngresado, setPrecioIngresado] = useState("");
-  const [passwordIngresado, setPasswordIngresado] = useState("");
   const [inventarioIngresado, setInventarioIngresado] = useState("");
-  const [superUserIngresado, setSuperUserIngresado] = useState(false);
-
+  const [fotoIngresada, setFotoIngresada] = useState(""); 
 
   const cambioNombreHandler = (event) => {
     setNombreIngresado(event.target.value);
@@ -27,6 +25,10 @@ const ActualizarProductoForm = (props) => {
   const cambioInventarioHandler = (event) => {
     setInventarioIngresado(event.target.value);
   };
+
+  const cambioFotoHandler = (event) => {
+    setFotoIngresada(event.target.value);
+  };
   
   
 
@@ -38,9 +40,8 @@ const ActualizarProductoForm = (props) => {
       nombre: nombreIngresado,
       descripcion: descripcionIngresada,
       precio: precioIngresado,
-      password: passwordIngresado,
       inventario: inventarioIngresado,
-      superUser: superUserIngresado,
+      foto: fotoIngresada,
     };
     
     if (
@@ -59,10 +60,8 @@ const ActualizarProductoForm = (props) => {
     setNombreIngresado("");
     setDescripcionIngresado("");
     setPrecioIngresado("");
-    setPasswordIngresado("");
     setInventarioIngresado("");
-    setSuperUserIngresado(false);
-
+    setFotoIngresada("");
     
   };
   
@@ -89,7 +88,7 @@ const ActualizarProductoForm = (props) => {
   <div className="nuevo-producto__control">
     <label>Precio: </label>
     <input
-      type="float"
+      type="text"
       value={precioIngresado}
       onChange={cambioPrecioHandler}
     />
@@ -98,14 +97,23 @@ const ActualizarProductoForm = (props) => {
   <div className="nuevo-producto__control">
     <label>Inventario: </label>
     <input
-      type="int"
+      type="text"
       value={inventarioIngresado}
       onChange={cambioInventarioHandler}
     />
   </div>
+
+  <div className="nuevo-producto__control">
+    <label>Foto: </label>
+    <input
+      type="text"
+      value={fotoIngresada}
+      onChange={cambioFotoHandler}
+    />
+  </div>
  
     <div className="nuevo-producto__actions">
-          <button type="submit">Actualizar producto</button>
+          <button type="submit">Actializar producto</button>
     </div>
   </div>
 
