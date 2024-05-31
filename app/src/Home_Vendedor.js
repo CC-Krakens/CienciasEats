@@ -85,10 +85,11 @@ function Home_Vendedor() {
       <div>
       {productos.map(producto => (
           <li key={producto.idProducto}>
-            <div>{producto.nombre}</div> 
-            <div>{producto.descripcion}</div>  
-            <div>{producto.precio}</div> 
-            <div>{producto.inventario}</div> 
+            <div>Nombre: {producto.nombre}</div> 
+            <div>Descripción: {producto.descripcion}</div> 
+            <div>Categoría: {producto.categoria}</div>  
+            <div>Precio: {producto.precio}</div> 
+            <div>Inventario: {producto.inventario}</div> 
             
             <div>
             <img

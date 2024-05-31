@@ -5,6 +5,7 @@ import "../../../App.css";
 const ActualizarProductoForm = (props) => {
   const [nombreIngresado, setNombreIngresado] = useState("");
   const [descripcionIngresada, setDescripcionIngresado] = useState("");
+  const [categoriaIngresada, setCategoriaIngresado] = useState("");
   const [precioIngresado, setPrecioIngresado] = useState("");
   const [inventarioIngresado, setInventarioIngresado] = useState("");
   const [fotoIngresada, setFotoIngresada] = useState(""); 
@@ -15,6 +16,10 @@ const ActualizarProductoForm = (props) => {
 
   const cambioDescripcionHandler = (event) => {
     setDescripcionIngresado(event.target.value);
+  };
+
+  const cambioCategoriaHandler = (event) => {
+    setCategoriaIngresado(event.target.value);
   };
   
   const cambioPrecioHandler = (event) => {
@@ -39,6 +44,7 @@ const ActualizarProductoForm = (props) => {
     const producto = {
       nombre: nombreIngresado,
       descripcion: descripcionIngresada,
+      categoria: categoriaIngresada,
       precio: precioIngresado,
       inventario: inventarioIngresado,
       foto: fotoIngresada,
@@ -47,6 +53,7 @@ const ActualizarProductoForm = (props) => {
     if (
       nombreIngresado === "" ||
       descripcionIngresada === "" ||
+      categoriaIngresada === "" ||
       precioIngresado === "" ||
       inventarioIngresado === ""
     ) {
@@ -59,6 +66,7 @@ const ActualizarProductoForm = (props) => {
     
     setNombreIngresado("");
     setDescripcionIngresado("");
+    setCategoriaIngresado("");
     setPrecioIngresado("");
     setInventarioIngresado("");
     setFotoIngresada("");
@@ -83,6 +91,12 @@ const ActualizarProductoForm = (props) => {
     type="text"
     value={descripcionIngresada}
     onChange={cambioDescripcionHandler}
+  />
+  <label>Categoría: </label>
+  <input
+    type="text"
+    value={categoriaIngresada}
+    onChange={cambioCategoriaHandler}
   />
 </div>
   <div className="nuevo-producto__control">

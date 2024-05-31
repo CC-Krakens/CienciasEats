@@ -30,6 +30,7 @@ const Productos = (props) => {
                         key={index}
                         nombre={producto.nombre}
                         descripcion={producto.descripcion}
+                        categoria={producto.categoria}
                         precio={producto.precio}
                         inventario={producto.inventario}
                         foto={producto.foto}
