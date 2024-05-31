@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import './styles.css';
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom"; 
-import NuevoProducto from "./NuevoProducto/NuevoProducto";
-import ActualizarProducto from "./NuevoProducto/ActualizarProducto";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
 function Home_Vendedor(props) {
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:5000/productos')
@@ -31,16 +31,30 @@ function Home_Vendedor(props) {
       });
   };
 
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:5000/logout', {
+        withCredentials: true,
+      });
+    } catch (error) {
+        alert(error);
+    }
+    navigate('/');
+  };
+
+
   return (
     
     <div className="home-container">
+      <button onClick={handleLogout}>Log Out</button>
       <div>
+      <h2>Tus productos</h2>
       {props.productos.map(producto => (
           <li key={producto.idProducto}>
           <div>Nombre: {producto.nombre}</div> 
           <div>Descripción: {producto.descripcion}</div> 
           <div>Categoría: {producto.categoria}</div>  
-          <div>Precio: {producto.precio}</div> 
+          <div>Precio: ${producto.precio}</div> 
           <div>Inventario: {producto.inventario}</div> 
           
           <div>

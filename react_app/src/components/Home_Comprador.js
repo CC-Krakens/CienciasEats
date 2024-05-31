@@ -40,15 +40,36 @@ function Home_Comprador() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:5000/logout', {
+        withCredentials: true,
+      });
+    } catch (error) {
+        alert(error);
+    }
+    navigate('/');
+  };
+
+
   return (
     <div className="home-container">
-      <h1>Ciencias eats</h1>
-      <p>Bienvenido, {username}.</p>
+      <button className="Logout" onClick={handleLogout}>Log Out</button>
       <p>Disfrute su compra</p>
       <ul>
         {productos.map((producto) => (
           <li key={producto.idProducto}>
-            {producto.nombre} - ${producto.precio}
+          <div>Nombre: {producto.nombre}</div> 
+          <div>Descripción: {producto.descripcion}</div> 
+          <div>Categoría: {producto.categoria}</div>  
+          <div>Precio: ${producto.precio}</div> 
+          <div>Inventario: {producto.inventario}</div> 
+          <div>
+            <img
+            src={producto.foto}
+            className="img-thumbnail"
+            />
+          </div>
             <button onClick={() => handleComprar(producto.idProducto)}>Comprar</button>
           </li>
         ))}

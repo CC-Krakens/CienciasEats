@@ -81,8 +81,16 @@ function Home_Vendedor() {
       });
   };
 
-
-  
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:5000/logout', {
+        withCredentials: true,
+      });
+    } catch (error) {
+        alert(error);
+    }
+    navigate('/');
+  };
   
 
   return (
@@ -90,6 +98,7 @@ function Home_Vendedor() {
     <Router>
 
       <div>
+      <button className="Logout" onClick={() => handleComprar(producto.idProducto)}>Comprar</button>
       {productos.map(producto => (
           <li key={producto.idProducto}>
             <div>Nombre: {producto.nombre}</div> 
