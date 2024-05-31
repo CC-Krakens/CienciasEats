@@ -76,7 +76,7 @@ const ActualizarProductoForm = (props) => {
     setFotoIngresada("");
 
 
-    navigate("/");
+    navigate("/home_vendedor");
     
   };
   
@@ -134,7 +134,7 @@ const ActualizarProductoForm = (props) => {
   </div>
  
     <div className="nuevo-producto__actions">
-          <button type="submit">Actializar producto</button>
+          <button type="submit">Actualizar producto</button>
     </div>
   </div>
 

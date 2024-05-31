@@ -75,7 +75,7 @@ const ProductoForm = (props) => {
     setFotoIngresada("");
 
 
-    navigate("/");
+    navigate("/home_vendedor");
     
   };
   

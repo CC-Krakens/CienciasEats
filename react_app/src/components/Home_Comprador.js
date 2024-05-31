@@ -53,7 +53,7 @@ function Home_Comprador() {
 
 
   return (
-    <div className="home-container">
+    <div className="home">
       <button className="Logout" onClick={handleLogout}>Log Out</button>
       <p>Disfrute su compra</p>
       <ul>

@@ -45,7 +45,7 @@ function Home_Vendedor(props) {
 
   return (
     
-    <div className="home-container">
+    <div className="home">
       <button onClick={handleLogout}>Log Out</button>
       <div>
       <h2>Tus productos</h2>
