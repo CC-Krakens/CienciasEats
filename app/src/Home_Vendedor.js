@@ -32,11 +32,14 @@ function Home_Vendedor() {
   .then(response => {
     console.log('Producto agregado:', response.data);
     setErrorMessage(""); 
+    window.location.reload();
+
   })
   .catch(error => {
     console.error('Error al agregar el producto:', error);
     alert("Error al agregar el producto");
 
+  
   });
 
 
@@ -68,9 +71,13 @@ function Home_Vendedor() {
           producto.idProducto === id ? response.data : producto
         ));
         console.log('Producto actualizado:', response.data);
+        window.location.reload();
+
       })
       .catch(error => {
         console.error('Error al actualizar el producto:', error);
+        alert("Error al actualizar el producto");
+
       });
   };
 

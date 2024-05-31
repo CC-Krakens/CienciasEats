@@ -2,6 +2,9 @@ import React, { useState } from "react";
 
 import "../../../App.css";
 
+import { useNavigate } from "react-router-dom";
+
+
 const ActualizarProductoForm = (props) => {
   const [nombreIngresado, setNombreIngresado] = useState("");
   const [descripcionIngresada, setDescripcionIngresado] = useState("");
@@ -9,6 +12,7 @@ const ActualizarProductoForm = (props) => {
   const [precioIngresado, setPrecioIngresado] = useState("");
   const [inventarioIngresado, setInventarioIngresado] = useState("");
   const [fotoIngresada, setFotoIngresada] = useState(""); 
+  const navigate = useNavigate();
 
   const cambioNombreHandler = (event) => {
     setNombreIngresado(event.target.value);
@@ -70,6 +74,9 @@ const ActualizarProductoForm = (props) => {
     setPrecioIngresado("");
     setInventarioIngresado("");
     setFotoIngresada("");
+
+
+    navigate("/");
     
   };
   
