@@ -2,14 +2,16 @@ import React, { useState } from "react";
 
 import "../../../App.css";
 
+import { useNavigate } from "react-router-dom";
+
 const ProductoForm = (props) => {
   const [nombreIngresado, setNombreIngresado] = useState("");
   const [descripcionIngresada, setDescripcionIngresado] = useState("");
+  const [categoriaIngresada, setCategoriaIngresado] = useState("");
   const [precioIngresado, setPrecioIngresado] = useState("");
-  const [passwordIngresado, setPasswordIngresado] = useState("");
   const [inventarioIngresado, setInventarioIngresado] = useState("");
-  const [superUserIngresado, setSuperUserIngresado] = useState(false);
-
+  const [fotoIngresada, setFotoIngresada] = useState(""); 
+  const navigate = useNavigate();
 
   const cambioNombreHandler = (event) => {
     setNombreIngresado(event.target.value);
@@ -17,6 +19,10 @@ const ProductoForm = (props) => {
 
   const cambioDescripcionHandler = (event) => {
     setDescripcionIngresado(event.target.value);
+  };
+
+  const cambioCategoriaHandler = (event) => {
+    setCategoriaIngresado(event.target.value);
   };
   
   const cambioPrecioHandler = (event) => {
@@ -26,6 +32,10 @@ const ProductoForm = (props) => {
   
   const cambioInventarioHandler = (event) => {
     setInventarioIngresado(event.target.value);
+  };
+
+  const cambioFotoHandler = (event) => {
+    setFotoIngresada(event.target.value);
   };
   
   
@@ -37,15 +47,16 @@ const ProductoForm = (props) => {
     const producto = {
       nombre: nombreIngresado,
       descripcion: descripcionIngresada,
+      categoria: categoriaIngresada,
       precio: precioIngresado,
-      password: passwordIngresado,
       inventario: inventarioIngresado,
-      superUser: superUserIngresado,
+      foto: fotoIngresada,
     };
     
     if (
       nombreIngresado === "" ||
       descripcionIngresada === "" ||
+      categoriaIngresada === "" ||
       precioIngresado === "" ||
       inventarioIngresado === ""
     ) {
@@ -58,11 +69,13 @@ const ProductoForm = (props) => {
     
     setNombreIngresado("");
     setDescripcionIngresado("");
+    setCategoriaIngresado("");
     setPrecioIngresado("");
-    setPasswordIngresado("");
     setInventarioIngresado("");
-    setSuperUserIngresado(false);
+    setFotoIngresada("");
 
+
+    navigate("/");
     
   };
   
@@ -85,11 +98,17 @@ const ProductoForm = (props) => {
     value={descripcionIngresada}
     onChange={cambioDescripcionHandler}
   />
+  <label>Categoría: </label>
+  <input
+    type="text"
+    value={categoriaIngresada}
+    onChange={cambioCategoriaHandler}
+  />
 </div>
   <div className="nuevo-producto__control">
     <label>Precio: </label>
     <input
-      type="float"
+      type="text"
       value={precioIngresado}
       onChange={cambioPrecioHandler}
     />
@@ -98,14 +117,24 @@ const ProductoForm = (props) => {
   <div className="nuevo-producto__control">
     <label>Inventario: </label>
     <input
-      type="int"
+      type="text"
       value={inventarioIngresado}
       onChange={cambioInventarioHandler}
     />
   </div>
+
+  <div className="nuevo-producto__control">
+    <label>Foto: </label>
+    <input
+      type="text"
+      value={fotoIngresada}
+      onChange={cambioFotoHandler}
+    />
+  </div>
+ 
  
     <div className="nuevo-producto__actions">
-          <button type="submit">Agregar producto</button>
+            <button type="submit">Agregar producto</button>
     </div>
   </div>
 

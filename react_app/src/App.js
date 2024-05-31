@@ -21,6 +21,7 @@ function App() {
         axios.post('http://localhost:5000/agregarProducto', producto, {withCredentials: true})
         .then(response => {
           console.log('Producto agregado:', response.data);
+          window.location.reload();
         })
         .catch(error => {
           console.error('Error al agregar el producto:', error);
@@ -36,9 +37,11 @@ function App() {
               producto.idProducto === id ? response.data : producto
             ));
             console.log('Producto actualizado:', response.data);
+            window.location.reload();
           })
           .catch(error => {
             console.error('Error al actualizar el producto:', error);
+            alert("Error al actualizar el producto");
           });
       };
 

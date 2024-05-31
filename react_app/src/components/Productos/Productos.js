@@ -30,10 +30,10 @@ const Productos = (props) => {
                         key={index}
                         nombre={producto.nombre}
                         descripcion={producto.descripcion}
+                        categoria={producto.categoria}
                         precio={producto.precio}
-                        password={producto.password}
                         inventario={producto.inventario}
-                        superUser={producto.superUser}
+                        foto={producto.foto}
                         onEliminar={() => eliminarProductoHandler(index)}
                         onActualizar={() => actualizarProductoHandler(index)}
 

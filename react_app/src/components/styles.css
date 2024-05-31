@@ -82,3 +82,16 @@ button {
 button:hover {
     background-color: #d64523;
 }
+
+.img-responsive {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .img-thumbnail {
+    max-width: 200px;
+    max-height: 200px;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+  }

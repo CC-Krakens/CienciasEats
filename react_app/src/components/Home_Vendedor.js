@@ -37,10 +37,18 @@ function Home_Vendedor(props) {
       <div>
       {props.productos.map(producto => (
           <li key={producto.idProducto}>
-            <div>{producto.nombre}</div> 
-            <div>{producto.descripcion}</div>  
-            <div>{producto.precio}</div> 
-            <div>{producto.inventario}</div> 
+          <div>Nombre: {producto.nombre}</div> 
+          <div>Descripción: {producto.descripcion}</div> 
+          <div>Categoría: {producto.categoria}</div>  
+          <div>Precio: {producto.precio}</div> 
+          <div>Inventario: {producto.inventario}</div> 
+          
+          <div>
+          <img
+    src={producto.foto}
+    className="img-thumbnail"
+    />
+    </div>
             <button onClick={() => eliminarProducto(producto.idProducto)}>Eliminar</button>
 
             <div className="actualizar-producto__actions">
