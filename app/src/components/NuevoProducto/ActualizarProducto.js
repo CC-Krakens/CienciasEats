@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 import '../../App.css';
-import ProductoForm from "./ProductoForm/ProductoForm";
+import ActualizarProductoForm from "./ProductoForm/ActualizarProductoForm";
 
 
 const ActualizarProducto = (props) => {
@@ -19,7 +19,7 @@ const ActualizarProducto = (props) => {
 
     return (
         <div className="actualizar-producto">
-            <ProductoForm onGuardarProducto={guardaProductoHandler} />
+            <ActualizarProductoForm onGuardarProducto={guardaProductoHandler} />
         </div>
     )
 }

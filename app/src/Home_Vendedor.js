@@ -12,10 +12,11 @@ import ActualizarProducto from "./components/NuevoProducto/ActualizarProducto";
 
 import axios from 'axios';
 
-
-function App() {
+function Home_Vendedor() {
 
   const [productos, setProductos] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+
 
 
   useEffect(() => {
@@ -29,10 +30,14 @@ function App() {
   axios.post('http://localhost:5000/agregarProducto', producto)
   .then(response => {
     console.log('Producto agregado:', response.data);
+    setErrorMessage(""); 
   })
   .catch(error => {
     console.error('Error al agregar el producto:', error);
+    alert("Error al agregar el producto");
+
   });
+
 
   };
 
@@ -80,7 +85,7 @@ function App() {
             <div>{producto.nombre}</div> 
             <div>{producto.descripcion}</div>  
             <div>{producto.precio}</div> 
-            <div>{producto.cantidad}</div> 
+            <div>{producto.inventario}</div> 
             <button onClick={() => eliminarProducto(producto.idProducto)}>Eliminar</button>
 
             <div className="actualizar-producto__actions">
@@ -108,5 +113,5 @@ function App() {
   );
 }
 
-export default App;
+export default Home_Vendedor;
      

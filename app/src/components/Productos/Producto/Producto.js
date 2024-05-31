@@ -10,7 +10,7 @@ const Producto = (props) => {
             <p>Nombre: {props.nombre}</p>
             <p>Descripcion: {props.descripcion}</p>
             <p>Precio: {props.precio}</p>
-            <p>Cantidad: {props.cantidad}</p>
+            <p>Inventario: {props.inventario}</p>
                 <button onClick={props.onEliminar}>Eliminar</button>
             </div>
             
