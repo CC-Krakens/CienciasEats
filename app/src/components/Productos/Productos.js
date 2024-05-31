@@ -32,7 +32,7 @@ const Productos = (props) => {
                         descripcion={producto.descripcion}
                         precio={producto.precio}
                         password={producto.password}
-                        cantidad={producto.cantidad}
+                        inventario={producto.inventario}
                         superUser={producto.superUser}
                         onEliminar={() => eliminarProductoHandler(index)}
                         onActualizar={() => actualizarProductoHandler(index)}

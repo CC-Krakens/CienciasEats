@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import "../../../App.css";
 
-const ProductoForm = (props) => {
+const ActualizarProductoForm = (props) => {
   const [nombreIngresado, setNombreIngresado] = useState("");
   const [descripcionIngresada, setDescripcionIngresado] = useState("");
   const [precioIngresado, setPrecioIngresado] = useState("");
@@ -105,7 +105,7 @@ const ProductoForm = (props) => {
   </div>
  
     <div className="nuevo-producto__actions">
-          <button type="submit">Agregar producto</button>
+          <button type="submit">Actualizar producto</button>
     </div>
   </div>
 
@@ -126,4 +126,4 @@ const ProductoForm = (props) => {
   );
 };
 
-export default ProductoForm;
+export default ActualizarProductoForm;

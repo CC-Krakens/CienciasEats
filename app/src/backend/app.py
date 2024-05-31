@@ -36,19 +36,24 @@ def logout():
 
 @app.route('/agregarProducto', methods=['POST'])
 def agregar_producto():
-    data = request.get_json()
-    nuevo_producto = Producto(
-        nombre=data['nombre'],
-        descripcion=data.get('descripcion', ''),
-        foto=data.get('foto'),
-        categoria=data.get('categoria', ''),
-        precio=data['precio'],
-        inventario=data['cantidad'],
-        vendedor = 88
-    )
-    db.session.add(nuevo_producto)
-    db.session.commit()
-    return jsonify(nuevo_producto.serialize()), 201
+    try:
+        data = request.get_json()
+        nuevo_producto = Producto(
+            nombre=data['nombre'],
+            descripcion=data.get('descripcion', ''),
+            foto=data.get('foto'),
+            categoria=data.get('categoria', ''),
+            precio=data['precio'],
+            inventario=data['inventario'],
+            vendedor = 88
+        )
+        db.session.add(nuevo_producto)
+        db.session.commit()
+        return jsonify(nuevo_producto.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+    
 
 
 @app.route('/eliminarProducto/<int:id>', methods=['DELETE'])
