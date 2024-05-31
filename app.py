@@ -120,12 +120,53 @@ def comprar():
 
     return jsonify({'status': 'success'})
 
-# @app.route('/prueba', methods=['GET'])
-# def prueba():
-#     mail = Mail(app)
-#     msg = Message("Compra realizada", sender="cienciaseats@gmail.com", recipients=["vendedor88888888@gmail.com"])
-#     msg.body = f"El usuario comprador ha comprado tu producto producto. Contactalo en correo_comprador@cienciaseats.com para coordinar la entrega."
-#     mail.send(msg)
+@app.route('/agregarProducto', methods=['POST'])
+def agregar_producto():
+    try:
+        data = request.get_json()
+        nuevo_producto = Producto(
+            nombre=data['nombre'],
+            descripcion=data.get('descripcion', ''),
+            foto=data.get('foto'),
+            categoria=data.get('categoria', ''),
+            precio=data['precio'],
+            inventario=data['inventario'],
+            vendedor = 88
+        )
+        db.session.add(nuevo_producto)
+        db.session.commit()
+        return jsonify(nuevo_producto.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+
+@app.route('/eliminarProducto/<int:id>', methods=['DELETE'])
+def eliminar_producto(id):
+    producto = Producto.query.get(id)
+    if producto is None:
+        return jsonify({'error': 'Producto no encontrado'}), 404
+
+    db.session.delete(producto)
+    db.session.commit()
+    return jsonify({'message': 'Producto eliminado'}), 200
+
+@app.route('/actualizarProducto/<int:id>', methods=['PUT'])
+def actualizar_producto(id):
+    data = request.get_json()
+    producto = Producto.query.get(id)
+    if producto is None:
+        return jsonify({'error': 'Producto no encontrado'}), 404
+
+    producto.nombre = data.get('nombre', producto.nombre)
+    producto.descripcion = data.get('descripcion', producto.descripcion)
+    producto.foto = data.get('foto', producto.foto)
+    producto.categoria = data.get('categoria', producto.categoria)
+    producto.precio = data.get('precio', producto.precio)
+    producto.inventario = data.get('inventario', producto.inventario)
+    producto.vendedor = data.get('vendedor', producto.vendedor)
+
+    db.session.commit()
+    return jsonify(producto.serialize()), 200
 
 if __name__ == '__main__':
     with app.app_context():
