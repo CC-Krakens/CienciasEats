@@ -1,56 +1,29 @@
 import React, { useEffect, useState } from "react";
-
 import './styles.css';
-
-
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom"; 
-
-
-import NuevoProducto from "./components/NuevoProducto/NuevoProducto";
-import ActualizarProducto from "./components/NuevoProducto/ActualizarProducto";
-
-
+import NuevoProducto from "./NuevoProducto/NuevoProducto";
+import ActualizarProducto from "./NuevoProducto/ActualizarProducto";
 import axios from 'axios';
 
-function Home_Vendedor() {
+axios.defaults.withCredentials = true;
 
-  const [productos, setProductos] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-
-
+function Home_Vendedor(props) {
 
   useEffect(() => {
     axios.get('http://localhost:5000/productos')
-      .then(response => setProductos(response.data))
+      .then(response => props.setProductos(response.data))
       .catch(error => console.error('No se encontraron productos:', error));
   }, []);
 
-  const agregarProducto = (producto) => {
 
-  axios.post('http://localhost:5000/agregarProducto', producto)
-  .then(response => {
-    console.log('Producto agregado:', response.data);
-    setErrorMessage(""); 
-  })
-  .catch(error => {
-    console.error('Error al agregar el producto:', error);
-    alert("Error al agregar el producto");
-
-  });
-
-
-  };
-
-
-  
   const eliminarProducto = (id) => {
-    const nuevaListaProductos = [...productos];
+    const nuevaListaProductos = [...props.productos];
     nuevaListaProductos.splice(id, 1);
-    setProductos(nuevaListaProductos);
+    props.setProductos(nuevaListaProductos);
 
     axios.delete(`http://localhost:5000/eliminarProducto/${id}`)
       .then(response => {
-        setProductos(productos.filter(producto => producto.idProducto !== id));
+        props.setProductos(props.productos.filter(producto => producto.idProducto !== id));
         console.log('Producto eliminado:', response.data);
       })
       .catch(error => {
@@ -58,29 +31,11 @@ function Home_Vendedor() {
       });
   };
 
-
-  const actualizarProducto = (id, datosActualizados) => {
-    axios.put(`http://localhost:5000/actualizarProducto/${id}`, datosActualizados)
-      .then(response => {
-        setProductos(productos.map(producto =>
-          producto.idProducto === id ? response.data : producto
-        ));
-        console.log('Producto actualizado:', response.data);
-      })
-      .catch(error => {
-        console.error('Error al actualizar el producto:', error);
-      });
-  };
-
-
-
-  
-
   return (
     
-    <Router>
+    <div className="home-container">
       <div>
-      {productos.map(producto => (
+      {props.productos.map(producto => (
           <li key={producto.idProducto}>
             <div>{producto.nombre}</div> 
             <div>{producto.descripcion}</div>  
@@ -105,11 +60,7 @@ function Home_Vendedor() {
         <div className="App">
     </div>
       </div>
-      <Routes>
-        <Route path="/nuevo-producto" element={<NuevoProducto onAgregarProducto={agregarProducto} />} />
-        <Route path="/actualizar-producto/:id" element={<ActualizarProducto onActualizarProducto={actualizarProducto} />} />
-      </Routes>
-    </Router>
+    </div>
   );
 }
 

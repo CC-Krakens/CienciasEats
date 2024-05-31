@@ -58,7 +58,7 @@ function Registro() {
                 Vendedor
                 <input type="checkbox" checked={vendedor} onChange={(e) => setVendedor(e.target.checked)} />
             </label>
-            <button type="submit">Login</button>
+            <button type="submit">Registrarse</button>
         </form>
     </div>
 );

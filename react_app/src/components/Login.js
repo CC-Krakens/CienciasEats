@@ -22,7 +22,7 @@ function Login() {
         if(!response.data.vendedor){
           navigate('/home_comprador', {state: {username: response.data.username}}, {withCredentials: true});
         }else{
-          navigate('/home', {state: {username: response.data.username}}, {withCredentials: true});
+          navigate('/home_vendedor', {state: {username: response.data.username}}, {withCredentials: true});
         }
       } else {
         alert(response.data.message);

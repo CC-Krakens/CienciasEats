@@ -121,6 +121,7 @@ def comprar():
     return jsonify({'status': 'success'})
 
 @app.route('/agregarProducto', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def agregar_producto():
     try:
         data = request.get_json()
@@ -131,7 +132,7 @@ def agregar_producto():
             categoria=data.get('categoria', ''),
             precio=data['precio'],
             inventario=data['inventario'],
-            vendedor = 88
+            vendedor=session['user_id']
         )
         db.session.add(nuevo_producto)
         db.session.commit()
